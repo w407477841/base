@@ -1,0 +1,36 @@
+package com.zyiot.commonservice.service.impl;
+
+import java.util.List;
+
+import com.zyiot.commonservice.entity.${classNameUpCase};
+import com.zyiot.commonservice.mapper.${classNameUpCase}Mapper;
+import com.zyiot.commonservice.service.I${classNameUpCase}Service;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+
+import org.springframework.stereotype.Service;
+
+/**
+ *
+ * @author ${author}
+ * @since ${time}
+ */
+@Service
+public class ${classNameUpCase}ServiceImpl extends ServiceImpl<${classNameUpCase}Mapper, ${classNameUpCase}> implements I${classNameUpCase}Service {
+
+	@Override
+	public Page<${classNameUpCase}> find${classNameUpCase}ByPage(Page<${classNameUpCase}> page, ${classNameUpCase} ${classNameLowCase}) {
+		return  page.setRecords(baseMapper.select${classNameUpCase}ByPage(page, ${classNameLowCase}));
+	}
+	
+	@Override
+	public Page<${classNameUpCase}> findOr${classNameUpCase}ByPage(Page<${classNameUpCase}> page, String key) {
+		return  page.setRecords(baseMapper.selectOr${classNameUpCase}ByPage(page, key));
+	}
+	
+	@Override
+	public List<${classNameUpCase}> find${classNameUpCase}All(${classNameUpCase} ${classNameLowCase}) {
+		return baseMapper.select${classNameUpCase}All(${classNameLowCase});
+	}
+
+}

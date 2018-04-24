@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.ShangjiInfoMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.ShangjiInfo">
+        <id column="id" property="id" />
+                <result column="sbsj" property="sbsj" />
+                <result column="yg" property="yg" />
+                <result column="xmbh" property="xmbh" />
+                <result column="khqc" property="khqc" />
+                <result column="khlxr" property="khlxr" />
+                <result column="lxfs" property="lxfs" />
+                <result column="xmmc" property="xmmc" />
+                <result column="sjly" property="sjly" />
+                <result column="yshtje" property="yshtje" />
+                <result column="shzt" property="shzt" />
+                <result column="gszt" property="gszt" />
+            </resultMap>
+ <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap1" type="com.zyiot.commonservice.entity.ShangjiInfo">
+        <id column="id" property="id" />
+                <result column="sbsj" property="sbsj" />
+                <result column="yg" property="yg" />
+                <result column="ygtxt" property="ygtxt" />
+                <result column="xmbh" property="xmbh" />
+                <result column="khqc" property="khqc" />
+                <result column="khlxr" property="khlxr" />
+                <result column="lxfs" property="lxfs" />
+                <result column="xmmc" property="xmmc" />
+                <result column="sjly" property="sjly" />
+                <result column="yshtje" property="yshtje" />
+                <result column="shzt" property="shzt" />
+                <result column="gszt" property="gszt" />
+            </resultMap>
+	<!--查询条件自己看情况添加 -->
+	<select id="selectShangjiInfoByPage" resultMap="BaseResultMap1">
+	select id,sbsj,yg,(select realname from t_user where username = t_shangji_info.yg)ygtxt,xmbh,khqc,khlxr,lxfs,xmmc,sjly,yshtje,shzt,gszt from t_shangji_info where 1=1 
+        <if test="shangjiInfo.sbsj!=null and shangjiInfo.sbsj!=''">
+    and sbsj like '%${shangjiInfo.sbsj}%'
+    </if>
+        <if test="shangjiInfo.yg!=null and shangjiInfo.yg!=''">
+    and yg = #{shangjiInfo.yg}
+    </if>
+        <if test="shangjiInfo.xmbh!=null and shangjiInfo.xmbh!=''">
+    and xmbh like '%${shangjiInfo.xmbh}%'
+    </if>
+        <if test="shangjiInfo.khqc!=null and shangjiInfo.khqc!=''">
+    and khqc like '%${shangjiInfo.khqc}%'
+    </if>
+        <if test="shangjiInfo.khlxr!=null and shangjiInfo.khlxr!=''">
+    and khlxr like '%${shangjiInfo.khlxr}%'
+    </if>
+        <if test="shangjiInfo.lxfs!=null and shangjiInfo.lxfs!=''">
+    and lxfs like '%${shangjiInfo.lxfs}%'
+    </if>
+        <if test="shangjiInfo.xmmc!=null and shangjiInfo.xmmc!=''">
+    and xmmc like '%${shangjiInfo.xmmc}%'
+    </if>
+        <if test="shangjiInfo.sjly!=null and shangjiInfo.sjly!=''">
+    and sjly like '%${shangjiInfo.sjly}%'
+    </if>
+        <if test="shangjiInfo.yshtje!=null and shangjiInfo.yshtje!=''">
+    and yshtje like '%${shangjiInfo.yshtje}%'
+    </if>
+        <if test="shangjiInfo.shzt!=null and shangjiInfo.shzt!=''">
+    and shzt = #{shangjiInfo.shzt}
+    </if>
+        <if test="shangjiInfo.gszt!=null and shangjiInfo.gszt!=''">
+    and gszt = #{shangjiInfo.gszt}
+    </if>
+    	
+
+
+	</select>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectShangjiInfoAll" resultMap="BaseResultMap">
+	select * from t_shangji_info where 1=1 
+        <if test="shangjiInfo.sbsj!=null and shangjiInfo.sbsj!=''">
+    and sbsj like '%${shangjiInfo.sbsj}%'
+    </if>
+        <if test="shangjiInfo.yg!=null and shangjiInfo.yg!=''">
+    and yg like '%${shangjiInfo.yg}%'
+    </if>
+        <if test="shangjiInfo.xmbh!=null and shangjiInfo.xmbh!=''">
+    and xmbh like '%${shangjiInfo.xmbh}%'
+    </if>
+        <if test="shangjiInfo.khqc!=null and shangjiInfo.khqc!=''">
+    and khqc like '%${shangjiInfo.khqc}%'
+    </if>
+        <if test="shangjiInfo.khlxr!=null and shangjiInfo.khlxr!=''">
+    and khlxr like '%${shangjiInfo.khlxr}%'
+    </if>
+        <if test="shangjiInfo.lxfs!=null and shangjiInfo.lxfs!=''">
+    and lxfs like '%${shangjiInfo.lxfs}%'
+    </if>
+        <if test="shangjiInfo.xmmc!=null and shangjiInfo.xmmc!=''">
+    and xmmc like '%${shangjiInfo.xmmc}%'
+    </if>
+        <if test="shangjiInfo.sjly!=null and shangjiInfo.sjly!=''">
+    and sjly like '%${shangjiInfo.sjly}%'
+    </if>
+        <if test="shangjiInfo.yshtje!=null and shangjiInfo.yshtje!=''">
+    and yshtje like '%${shangjiInfo.yshtje}%'
+    </if>
+        <if test="shangjiInfo.shzt!=null and shangjiInfo.shzt!=''">
+    and shzt like '%${shangjiInfo.shzt}%'
+    </if>
+        <if test="shangjiInfo.gszt!=null and shangjiInfo.gszt!=''">
+    and gszt like '%${shangjiInfo.gszt}%'
+    </if>
+    	
+
+
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.${classNameUpCase}Mapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.${classNameUpCase}">
+        <id column="id" property="id" />
+        #foreach ($attr in ${attrs})
+        <result column="${attr[0]}" property="${attr[1]}" />
+        #end
+    </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="select${classNameUpCase}ByPage" resultMap="BaseResultMap">
+	select * from ${table} where 1=1 
+    #foreach ($attr in ${attrs} )
+    <if test="${classNameLowCase}.${attr[1]}!=null and ${classNameLowCase}.${attr[1]}!=''">
+    and ${attr[0]} like '%${${classNameLowCase}.${attr[1]}}%'
+    </if>
+    #end
+	
+
+
+	</select>
+	
+	
+		<!--查询条件自己看情况添加 -->
+	<select id="selectOr${classNameUpCase}ByPage" resultMap="BaseResultMap">
+	select * from ${table} 
+	</select>
+	
+	
+	
+
+	<!--查询条件自己看情况添加 -->
+	<select id="select${classNameUpCase}All" resultMap="BaseResultMap">
+	select * from ${table} where 1=1 
+    #foreach ($attr in ${attrs} )
+    <if test="${classNameLowCase}.${attr[1]}!=null and ${classNameLowCase}.${attr[1]}!=''">
+    and ${attr[0]} like '%${${classNameLowCase}.${attr[1]}}%'
+    </if>
+    #end
+	
+
+
+	</select>
+
+
+
+</mapper>

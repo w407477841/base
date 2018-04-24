@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.RoleMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.Role">
+        <id column="id" property="id" />
+                <result column="role_name" property="roleName" />
+                <result column="intro" property="intro" />
+                <result column="deleted" property="deleted" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectRoleByPage" resultMap="BaseResultMap">
+	select * from t_role where 1=1 
+        <if test="role.roleName!=null and role.roleName!=''">
+    and role_name like '%${role.roleName}%'
+    </if>
+        <if test="role.intro!=null and role.intro!=''">
+    and intro like '%${role.intro}%'
+    </if>
+        <if test="role.deleted!=null and role.deleted!=''">
+    and deleted like '%${role.deleted}%'
+    </if>
+    	
+
+
+	</select>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectRoleAll" resultMap="BaseResultMap">
+	select * from t_role where 1=1 
+        <if test="role.roleName!=null and role.roleName!=''">
+    and role_name like '%${role.roleName}%'
+    </if>
+        <if test="role.intro!=null and role.intro!=''">
+    and intro like '%${role.intro}%'
+    </if>
+        <if test="role.deleted!=null and role.deleted!=''">
+    and deleted like '%${role.deleted}%'
+    </if>
+    	
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.FactoryMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.Factory">
+        <id column="id" property="id" />
+                <result column="bh" property="bh" />
+                <result column="name" property="name" />
+                <result column="addr" property="addr" />
+                <result column="phone" property="phone" />
+                <result column="owner" property="owner" />
+                <result column="start_day" property="startDay" />
+                <result column="end_day" property="endDay" />
+                <result column="max" property="max" />
+                <result column="status" property="status" />
+            </resultMap>
+ <resultMap id="BaseResultMap1" type="com.zyiot.commonservice.entity.Factory">
+        <id column="id" property="id" />
+                <result column="bh" property="bh" />
+                <result column="name" property="name" />
+                <result column="addr" property="addr" />
+                <result column="phone" property="phone" />
+                <result column="owner" property="owner" />
+                <result column="ownerTxt" property="ownerTxt" />
+                <result column="start_day" property="startDay" />
+                <result column="end_day" property="endDay" />
+                <result column="max" property="max" />
+                <result column="status" property="status" />
+            </resultMap>
+	<!--查询条件自己看情况添加 -->
+	<select id="selectFactoryByPage" resultMap="BaseResultMap">
+	select * from t_factory where 1=1 
+        <if test="factory.bh!=null and factory.bh!=''">
+    and bh like '%${factory.bh}%'
+    </if>
+        <if test="factory.name!=null and factory.name!=''">
+    and name like '%${factory.name}%'
+    </if>
+        <if test="factory.addr!=null and factory.addr!=''">
+    and addr like '%${factory.addr}%'
+    </if>
+        <if test="factory.phone!=null and factory.phone!=''">
+    and phone like '%${factory.phone}%'
+    </if>
+        <if test="factory.owner!=null and factory.owner!=''">
+    and owner like '%${factory.owner}%'
+    </if>
+        <if test="factory.startDay!=null and factory.startDay!=''">
+    and start_day like '%${factory.startDay}%'
+    </if>
+        <if test="factory.endDay!=null and factory.endDay!=''">
+    and end_day like '%${factory.endDay}%'
+    </if>
+        <if test="factory.max!=null and factory.max!=''">
+    and max like '%${factory.max}%'
+    </if>
+        <if test="factory.status!=null and factory.status!=''">
+    and status like '%${factory.status}%'
+    </if>
+    	
+
+
+	</select>
+	
+	
+		<!--查询条件自己看情况添加 -->
+	<select id="selectOrFactoryByPage" resultMap="BaseResultMap1">
+	select id,bh,name,addr,phone,(select realname from t_user where id=t_factory.owner) ownerTxt,owner,status,start_day,end_day,max from t_factory 
+	<if test="key !='' and key !=null">
+	where 
+		bh like '%${key}%'
+	or
+		name like '%${key}%'
+	or
+	 	addr like '%${key}%'
+	or
+		phone like '%${key}%'
+	or	
+		status like '%${key}%'
+	or 
+		owner in (select id from t_user where realname like '%${key}%')			 		
+	</if>
+	</select>
+	
+		<!--查询条件自己看情况添加 -->
+	<select id="selectById" resultMap="BaseResultMap1">
+	select id,bh,name,addr,phone,(select realname from t_user where id=t_factory.owner) ownerTxt,owner,status,start_day,end_day,max from t_factory 
+	where id=#{id}
+	</select>
+	
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectFactoryAll" resultMap="BaseResultMap">
+	select * from t_factory where 1=1 
+        <if test="factory.bh!=null and factory.bh!=''">
+    and bh like '%${factory.bh}%'
+    </if>
+        <if test="factory.name!=null and factory.name!=''">
+    and name like '%${factory.name}%'
+    </if>
+        <if test="factory.addr!=null and factory.addr!=''">
+    and addr like '%${factory.addr}%'
+    </if>
+        <if test="factory.phone!=null and factory.phone!=''">
+    and phone like '%${factory.phone}%'
+    </if>
+        <if test="factory.owner!=null and factory.owner!=''">
+    and owner like '%${factory.owner}%'
+    </if>
+        <if test="factory.startDay!=null and factory.startDay!=''">
+    and start_day like '%${factory.startDay}%'
+    </if>
+        <if test="factory.endDay!=null and factory.endDay!=''">
+    and end_day like '%${factory.endDay}%'
+    </if>
+        <if test="factory.max!=null and factory.max!=''">
+    and max like '%${factory.max}%'
+    </if>
+        <if test="factory.status!=null and factory.status!=''">
+    and status like '%${factory.status}%'
+    </if>
+    	
+
+
+	</select>
+
+
+
+</mapper>

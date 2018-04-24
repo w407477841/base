@@ -1,0 +1,33 @@
+修改项目名 pom.xml中修改
+创建数据库init.sql
+修改application.properties 数据库链接
+启动
+ 初始密码111111
+ REst API
+ 访问 http://ip:port/swagger-ui.html 可以查看API
+ 
+ 可以自动生成 单表増、删、改、查。
+ 
+ securit+JWT 实现 登录验证+ 权限控制。
+ 
+ aop实现 controller拦截 （all或者増删改）
+ 
+ quartz实现 任务与逻辑分离
+ 
+ 
+ 
+ service、controller全部抛出异常，不要try catch。通过 logAspect来拦截做日志保存、通过CustomExceptionResolver返回前端错误信息
+ 
+ 
+ 
+ 使用 mybatis-plus简化 操作
+ 
+ 
+ 
+ 需要开启redis服务器
+ 
+ 
+
+ 
+ 
+ 

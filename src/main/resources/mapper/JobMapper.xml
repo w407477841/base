@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.JobMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.Job">
+        <id column="id" property="id" />
+                <result column="job_name" property="jobName" />
+                <result column="job_group" property="jobGroup" />
+                <result column="rest_url" property="restUrl" />
+                <result column="deleted" property="deleted" />
+                <result column="cron" property="cron" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectJobByPage" resultMap="BaseResultMap">
+	select * from t_job where 1=1 
+        <if test="job.jobName!=null and job.jobName!=''">
+    and job_name like '%${job.jobName}%'
+    </if>
+        <if test="job.jobGroup!=null and job.jobGroup!=''">
+    and job_group like '%${job.jobGroup}%'
+    </if>
+        <if test="job.restUrl!=null and job.restUrl!=''">
+    and rest_url like '%${job.restUrl}%'
+    </if>
+        <if test="job.deleted!=null and job.deleted!=''">
+    and deleted like '%${job.deleted}%'
+    </if>
+        <if test="job.cron!=null and job.cron!=''">
+    and cron like '%${job.cron}%'
+    </if>
+    	
+
+
+	</select>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectJobAll" resultMap="BaseResultMap">
+	select * from t_job where 1=1 
+        <if test="job.jobName!=null and job.jobName!=''">
+    and job_name like '%${job.jobName}%'
+    </if>
+        <if test="job.jobGroup!=null and job.jobGroup!=''">
+    and job_group like '%${job.jobGroup}%'
+    </if>
+        <if test="job.restUrl!=null and job.restUrl!=''">
+    and rest_url like '%${job.restUrl}%'
+    </if>
+        <if test="job.deleted!=null and job.deleted!=''">
+    and deleted like '%${job.deleted}%'
+    </if>
+        <if test="job.cron!=null and job.cron!=''">
+    and cron like '%${job.cron}%'
+    </if>
+    	
+
+
+	</select>
+
+   <select id="selectJob"  resultMap="BaseResultMap">
+   select * from t_job where job_name=#{name} and job_group=#{group}
+   </select>
+
+
+
+</mapper>

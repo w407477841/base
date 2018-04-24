@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.RoleRightMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.RoleRight">
+        <id column="id" property="id" />
+                <result column="role_id" property="roleId" />
+                <result column="right_id" property="rightId" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectRoleRightByPage" resultMap="BaseResultMap">
+	select * from t_role_right where 1=1 
+        <if test="roleRight.roleId!=null and roleRight.roleId!=''">
+    and role_id like '%${roleRight.roleId}%'
+    </if>
+        <if test="roleRight.rightId!=null and roleRight.rightId!=''">
+    and right_id like '%${roleRight.rightId}%'
+    </if>
+    	
+
+
+	</select>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectRoleRightAll" resultMap="BaseResultMap">
+	select * from t_role_right where 1=1 
+        <if test="roleRight.roleId!=null and roleRight.roleId!=''">
+    and role_id like '%${roleRight.roleId}%'
+    </if>
+        <if test="roleRight.rightId!=null and roleRight.rightId!=''">
+    and right_id like '%${roleRight.rightId}%'
+    </if>
+    	
+
+
+	</select>
+
+
+
+</mapper>

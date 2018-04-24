@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.UserMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.User">
+        <id column="id" property="id" />
+                <result column="username" property="username" />
+                <result column="realname" property="realname" />
+                <result column="password" property="password" />
+                <result column="access_token" property="accessToken" />
+                <result column="status" property="status" />
+                <result column="approved" property="approved" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectUserByPage" resultMap="BaseResultMap">
+	select * from t_user where 1=1 
+        <if test="user.username!=null and user.username!=''">
+    and username like '%${user.username}%'
+    </if>
+        <if test="user.realname!=null and user.realname!=''">
+    and realname like '%${user.realname}%'
+    </if>
+        <if test="user.password!=null and user.password!=''">
+    and password like '%${user.password}%'
+    </if>
+        <if test="user.accessToken!=null and user.accessToken!=''">
+    and access_token like '%${user.accessToken}%'
+    </if>
+    <if test="user.status!=null and user.status!=''">
+    and status like '%${user.status}%'
+    </if>
+    <if test="user.approved!=null and user.approved!=''">
+    and approved like '%${user.approved}%'
+    </if>
+    	
+
+
+	</select>
+
+		<!--查询条件自己看情况添加 -->
+	<select id="selectOrUserByPage" resultMap="BaseResultMap">
+	select * from t_user
+	<if test="key!=null and key !=''">
+	where username  like '%${key}%'
+	 or 
+	realname  like '%${key}%'
+	or 
+	STATUS = if('${key}'='启用',1,if('${key}'='禁用',0,2))
+	or
+	approved = #{key}
+	</if>
+       
+	</select>
+
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectUserAll" resultMap="BaseResultMap">
+	select * from t_user where 1=1 
+      <if test="user.username!=null and user.username!=''">
+    and username like '%${user.username}%'
+    </if>
+        <if test="user.realname!=null and user.realname!=''">
+    and realname like '%${user.realname}%'
+    </if>
+        <if test="user.password!=null and user.password!=''">
+    and password like '%${user.password}%'
+    </if>
+        <if test="user.accessToken!=null and user.accessToken!=''">
+    and access_token like '%${user.accessToken}%'
+    </if>
+        <if test="user.status!=null and user.status!=''">
+    and status like '%${user.status}%'
+    </if>
+    	
+
+
+	</select>
+
+
+<select id="findUserByUsernameOrPhone" resultMap="BaseResultMap">
+	select id,username,realname ,`password`,access_token,`status`,approved from (
+SELECT
+t_user.id,
+t_user.username,
+t_user.realname,
+t_user.`password`,
+t_user.access_token,
+t_user.`status`,
+t_user_info.id id2,
+t_user_info.username username2,
+t_user_info.phone,
+t_user.approved
+FROM
+t_user
+LEFT JOIN t_user_info ON t_user.username = t_user_info.username
+
+where 
+<if test="type=='username'">
+t_user.username=#{username}
+</if>
+<if test="type!='username'">
+phone = #{username}
+</if>  
+ 
+  
+   ) m
+	
+	</select>
+	
+	<select id="selectUserInfoByUsername" resultType="com.zyiot.commonservice.pojo.PUserInfo">
+	SELECT
+	t_user.username,
+	t_user.realname,	
+	t_user_info.phone,
+	t_user_info.sex,
+	t_user_info.birth,
+	(select name from t_factory where t_factory.id=t_user_info.factory_id) facory,
+	t_user_info.type,
+	t_user_info.email,
+	(select dept_name from t_dept where t_dept.id=t_user_info.dept) dept
+from 
+	t_user
+	INNER JOIN t_user_info  ON t_user.username=t_user_info.username where t_user.username=#{username}
+	</select>
+	
+	<select id="selectCountUserByPhone" resultType="java.lang.Integer">
+	select count(1) count from t_user_info where phone=#{phone}  
+	</select>
+	
+</mapper>

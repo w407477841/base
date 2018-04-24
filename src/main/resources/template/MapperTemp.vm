@@ -1,0 +1,25 @@
+package com.zyiot.commonservice.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.zyiot.commonservice.entity.${classNameUpCase};
+
+/**
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author ${authot}
+ * @since ${time}
+ */
+public interface ${classNameUpCase}Mapper extends BaseMapper<${classNameUpCase}> {
+	public List<${classNameUpCase}> select${classNameUpCase}ByPage(Pagination page,@Param("${classNameLowCase}")${classNameUpCase} ${classNameLowCase});
+	public List<${classNameUpCase}> selectOr${classNameUpCase}ByPage(Pagination page,@Param("key")String key);
+	public List<${classNameUpCase}> select${classNameUpCase}All(@Param("${classNameLowCase}")${classNameUpCase} ${classNameLowCase});
+	
+}

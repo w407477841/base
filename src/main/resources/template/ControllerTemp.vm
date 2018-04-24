@@ -1,0 +1,277 @@
+package com.zyiot.commonservice.controller;
+
+import java.util.ArrayList;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+import io.swagger.annotations.ApiOperation;
+import java.util.List;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.zyiot.commonservice.entity.${classNameUpCase};
+import com.zyiot.commonservice.service.I${classNameUpCase}Service;
+/**
+ * @author ${author}
+ * @since ${time}
+ */
+
+@Controller
+@RequestMapping("/${classNameLowCase}")
+public class  ${classNameUpCase}Controller {
+	 @Autowired
+	private I${classNameUpCase}Service  ${classNameLowCase}Service;
+	
+/**
+ * 添加  基础方法
+ * @return
+ */
+	@PostMapping()
+	@PreAuthorize(value="hasRole('${classNameLowCase}_add')")
+	@ApiOperation(value="创建${className}", notes="根据${classNameLowCase}创建${className},需要权限${classNameLowCase}_add")
+	@ApiImplicitParams(value={
+	@ApiImplicitParam(name="access_token",value="登录令牌",required=false,dataType="String",paramType="query"),
+	@ApiImplicitParam(name = "${classNameLowCase}", value = "${className}", required = true, dataType = "${classNameUpCase}",paramType="body")
+	})
+	@ApiResponses(value={
+			@ApiResponse(code=401,message="未授权,先登录",response=String.class),
+			@ApiResponse(code=403,message="无权限",response=String.class),
+			@ApiResponse(code=404,message="不存在",response=String.class),
+			@ApiResponse(code=500,message="失败",response=String.class)
+	})
+	public ResponseEntity< ${classNameUpCase}> add(@RequestBody() ${classNameUpCase} ${classNameLowCase}){
+			if (${classNameLowCase}Service.insert(${classNameLowCase})) {
+				return new ResponseEntity<${classNameUpCase}>(${classNameLowCase}, HttpStatus.OK);
+		}else{
+				throw new  AddException("未知失败，请重试");
+			}
+		
+	}
+	/**
+	 * 删除 基础方法
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping(value="/{id}/")
+	@PreAuthorize(value="hasRole('${classNameLowCase}_deleted')")
+	@ApiOperation(value="删除${className}", notes="根据id删除${className}，需要权限${classNameLowCase}_deleted')")
+	@ApiImplicitParams(value={
+	@ApiImplicitParam(name="access_token",value="登录令牌",required=false,dataType="String",paramType="query"),
+	@ApiImplicitParam(name = "id", value = "主键", required = true, dataType = "Long",paramType="path")
+	})
+	@ApiResponses(value={
+			@ApiResponse(code=401,message="未授权,先登录",response=String.class),
+			@ApiResponse(code=403,message="无权限",response=String.class),
+			@ApiResponse(code=404,message="不存在",response=String.class),
+			@ApiResponse(code=500,message="失败",response=String.class)
+	})
+	public  ResponseEntity<String> deleted(@PathVariable(value="id")Long id){
+			if(${classNameLowCase}Service.deleteById(id)){
+				return new  ResponseEntity<String>("删除成功",HttpStatus.OK);
+		}else{
+				throw new DeleteException("删除失败，数据已不存在");
+			}
+		
+		
+	}
+	/**
+	 * 修改 基础方法
+	 * @param ${classNameUpCase}
+	 * @return
+	 */
+	@PutMapping()
+	@PreAuthorize(value="hasRole('${classNameLowCase}_update')")
+	@ApiOperation(value="修改${className}", notes="根据${classNameLowCase}修改${className}，需要权限${classNameLowCase}_update')")
+	@ApiImplicitParams(value={
+	@ApiImplicitParam(name="access_token",value="登录令牌",required=false,dataType="String",paramType="query"),
+	@ApiImplicitParam(name = "${classNameLowCase}", value = "${className}", required = true, dataType = "${classNameUpCase}",paramType="body")
+	})
+	@ApiResponses(value={
+			@ApiResponse(code=401,message="未授权,先登录",response=String.class),
+			@ApiResponse(code=403,message="无权限",response=String.class),
+			@ApiResponse(code=404,message="不存在",response=String.class),
+			@ApiResponse(code=500,message="失败",response=String.class)
+	})
+	public ResponseEntity< ${classNameUpCase}> update(@RequestBody ${classNameUpCase} ${classNameLowCase}){
+		
+			if(${classNameLowCase}Service.updateById(${classNameLowCase})){
+				return new  ResponseEntity<${classNameUpCase}>(${classNameLowCase},HttpStatus.OK);
+		}else{
+				throw new UpdateException("数据不存在");
+			}
+		
+	}
+	/**
+	 * 单条查询 基础方法
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(value="/{id}/")
+	@PreAuthorize(value="hasRole('${classNameLowCase}_info')")
+	@ApiOperation(value="查询${className}", notes="根据id查询${className}，需要权限${classNameLowCase}_info")
+	@ApiImplicitParams(value={
+	@ApiImplicitParam(name="access_token",value="登录令牌",required=false,dataType="String",paramType="query"),
+	@ApiImplicitParam(name = "id", value = "主键", required = true, dataType = "Long",paramType="path")
+	})
+	@ApiResponses(value={
+			@ApiResponse(code=200,message="成功",response=${classNameUpCase}.class),
+			@ApiResponse(code=401,message="未授权,先登录",response=String.class),
+			@ApiResponse(code=403,message="无权限",response=String.class),
+			@ApiResponse(code=404,message="不存在",response=String.class),
+			@ApiResponse(code=500,message="失败",response=String.class)
+	})
+	public ResponseEntity<${classNameUpCase}> findByid(@PathVariable("id")Long id){
+		
+		
+		     ${classNameUpCase} ${classNameLowCase}=null;
+				${classNameLowCase} = ${classNameLowCase}Service.selectById(id);
+				 
+				 if(${classNameLowCase} !=null) {
+					 return new  ResponseEntity<${classNameUpCase}>(${classNameLowCase},HttpStatus.OK);
+				 }else{
+				 return new  ResponseEntity<${classNameUpCase}>(new ${classNameUpCase}(),HttpStatus.OK);
+				 }
+		     
+		
+	}
+	/**
+	 * 分页查询  基础方法
+	 * @param pageSize
+	 * @param pageNum
+	 * @param sort
+	 * @param column
+	 * @param ${classNameUpCase}
+	 * @return
+	 */
+	@PostMapping("/page/")
+	@PreAuthorize(value="hasRole('${classNameLowCase}_page')")
+	@ApiOperation(value="分页查询${className}", notes="根据${classNameLowCase}分页${className}，需要权限${classNameLowCase}_info")
+	@ApiImplicitParams(value={
+	@ApiImplicitParam(name="access_token",value="登录令牌",required=false,dataType="String",paramType="query"),
+	@ApiImplicitParam(name = "pageSize", value = "每页大小[大于0]", required = true, dataType = "Integer",paramType="query"),
+	@ApiImplicitParam(name = "pageNum", value = "当前页号[1开始]", required = true, dataType = "Integer",paramType="query"),
+	@ApiImplicitParam(name = "sort", value = "排序方式[desc/asc]", required = true, dataType = "String",paramType="query"),
+	@ApiImplicitParam(name = "column", value = "排序字段", required = true, dataType = "String",paramType="query"),
+	@ApiImplicitParam(name = "${classNameLowCase}", value = "${className}", required = true, dataType = "${classNameUpCase}",paramType="body")
+	})
+	@ApiResponses(value={
+			@ApiResponse(code=200,message="成功",response=Page.class),
+			@ApiResponse(code=401,message="未授权,先登录",response=String.class),
+			@ApiResponse(code=403,message="无权限",response=String.class),
+			@ApiResponse(code=404,message="不存在",response=String.class),
+			@ApiResponse(code=500,message="失败",response=String.class)
+	})
+	public ResponseEntity<Page<${classNameUpCase}>> fingByPage(@RequestParam("pageSize")int pageSize,@RequestParam("pageNum")int pageNum,@RequestParam("sort")String sort ,@RequestParam("column")String column,@RequestBody ${classNameUpCase} ${classNameLowCase}){
+		Page<${classNameUpCase}> page=null;
+			page=new Page<${classNameUpCase}>(pageNum, pageSize);
+
+			page.setAsc(!(sort!=null&&sort.equals("desc")));
+			page.setOrderByField(column);
+			page.setOpenSort(true);
+			page= ${classNameLowCase}Service.find${classNameUpCase}ByPage(page, ${classNameLowCase});
+			
+			
+			
+			return new ResponseEntity<Page<${classNameUpCase}>>(page, HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * 分页查询  基础方法
+	 * @param pageSize
+	 * @param pageNum
+	 * @param sort
+	 * @param column
+	 * @param ${classNameUpCase}
+	 * @return
+	 */
+	@PostMapping("/key/")
+	@PreAuthorize(value="hasRole('${classNameLowCase}_page')")
+	@ApiOperation(value="分页查询${className}", notes="根据key分页${className}，需要权限${classNameLowCase}_info")
+	@ApiImplicitParams(value={
+	@ApiImplicitParam(name="access_token",value="登录令牌",required=false,dataType="String",paramType="query"),
+	@ApiImplicitParam(name = "pageSize", value = "每页大小[大于0]", required = true, dataType = "Integer",paramType="query"),
+	@ApiImplicitParam(name = "pageNum", value = "当前页号[1开始]", required = true, dataType = "Integer",paramType="query"),
+	@ApiImplicitParam(name = "sort", value = "排序方式[desc/asc]", required = true, dataType = "String",paramType="query"),
+	@ApiImplicitParam(name = "column", value = "排序字段", required = true, dataType = "String",paramType="query"),
+	@ApiImplicitParam(name = "key", value = "关键词", required = false, dataType = "String",paramType="query")
+	})
+	@ApiResponses(value={
+			@ApiResponse(code=200,message="成功",response=Page.class),
+			@ApiResponse(code=401,message="未授权,先登录",response=String.class),
+			@ApiResponse(code=403,message="无权限",response=String.class),
+			@ApiResponse(code=404,message="不存在",response=String.class),
+			@ApiResponse(code=500,message="失败",response=String.class)
+	})
+	public ResponseEntity<Page<${classNameUpCase}>> fingUseKeyByPage(@RequestParam("pageSize")int pageSize,@RequestParam("pageNum")int pageNum,@RequestParam("sort")String sort ,@RequestParam("column")String column,@RequestParam (value="key",required=false)String key){
+		Page<${classNameUpCase}> page=null;
+			page=new Page<${classNameUpCase}>(pageNum, pageSize);
+
+			page.setAsc(!(sort!=null&&sort.equals("desc")));
+			page.setOrderByField(column);
+			page.setOpenSort(true);
+			page= ${classNameLowCase}Service.findOr${classNameUpCase}ByPage(page, key);
+			
+			
+			
+			return new ResponseEntity<Page<${classNameUpCase}>>(page, HttpStatus.OK);
+	}
+	
+	
+		@GetMapping()
+		@PreAuthorize(value="hasRole('${classNameLowCase}_all')")
+		@ApiOperation(value="查询${className}", notes="根据${classNameLowCase}查询${className}")
+			@ApiImplicitParams(value={
+			@ApiImplicitParam(name="access_token",value="登录令牌",required=false,dataType="String",paramType="query"),
+			#foreach($attr in ${attrs} )
+			#if
+			($velocityCount==1)
+			@ApiImplicitParam(name = "${attr[1]}", value = "${attr[3]}", required = false, dataType = "${attr[2]}",paramType="query")
+			#else
+			,@ApiImplicitParam(name = "${attr[1]}", value = "${attr[3]}", required = false, dataType = "${attr[2]}",paramType="query")   
+			#end
+			#end
+	})
+		@ApiResponses(value={
+			@ApiResponse(code=401,message="未授权,先登录",response=String.class),
+			@ApiResponse(code=403,message="无权限",response=String.class),
+			@ApiResponse(code=404,message="不存在",response=String.class),
+			@ApiResponse(code=500,message="失败",response=String.class)
+	})
+	public ResponseEntity<List<${classNameUpCase}>> findRoleAll(
+	#foreach($attr in ${attrs} )
+			#if
+			($velocityCount==1) @RequestParam(value="${attr[1]}",required=false)${attr[2]} ${attr[1]}
+			#else
+			 ,@RequestParam(value="${attr[1]}",required=false)${attr[2]} ${attr[1]}
+			  #end
+			#end
+	){
+		${classNameUpCase} ${classNameLowCase} =new ${classNameUpCase}();
+			#foreach($attr in ${attrs} )
+			${classNameLowCase}.${attr[4]}(${attr[1]});
+			#end
+		List<${classNameUpCase}> ${classNameLowCase}s= null;
+			 ${classNameLowCase}s=${classNameLowCase}Service.find${classNameUpCase}All(${classNameLowCase});
+			 return new ResponseEntity<List<${classNameUpCase}>>(${classNameLowCase}s, HttpStatus.OK);
+	}
+	
+	
+	
+	
+}

@@ -1,0 +1,6 @@
+insert into `t_right` (right_name,module_id,available_devices,url,right_txt) values ('${classNameLowCase}_add',${module},'111','/${classNameLowCase}','新增');
+insert into `t_right` (right_name,module_id,available_devices,url,right_txt) values ('${classNameLowCase}_deleted',${module},'111','/${classNameLowCase}','删除');
+insert into `t_right` (right_name,module_id,available_devices,url,right_txt) values ('${classNameLowCase}_update',${module},'111','/${classNameLowCase}','修改');
+insert into `t_right` (right_name,module_id,available_devices,url,right_txt) values ('${classNameLowCase}_info',${module},'111','/${classNameLowCase}','信息');
+insert into `t_right` (right_name,module_id,available_devices,url,right_txt) values ('${classNameLowCase}_page',${module},'111','/${classNameLowCase}/page/','分页');
+insert into `t_right` (right_name,module_id,available_devices,url,right_txt) values ('${classNameLowCase}_all',${module},'111','/${classNameLowCase}','查询');

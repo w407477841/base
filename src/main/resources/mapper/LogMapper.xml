@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.LogMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.Log">
+        <id column="id" property="id" />
+                <result column="method" property="method" />
+                <result column="url" property="url" />
+                <result column="param" property="param" />
+                <result column="result" property="result" />
+                <result column="ope_time" property="opeTime" />
+                <result column="exp_time" property="expTime" />
+                <result column="operator" property="operator" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectLogByPage" resultMap="BaseResultMap">
+	select * from t_log where 1=1 
+        <if test="log.method!=null and log.method!=''">
+    and method like '%${log.method}%'
+    </if>
+        <if test="log.url!=null and log.url!=''">
+    and url like '%${log.url}%'
+    </if>
+        <if test="log.param!=null and log.param!=''">
+    and param like '%${log.param}%'
+    </if>
+        <if test="log.result!=null and log.result!=''">
+    and result like '%${log.result}%'
+    </if>
+        <if test="log.opeTime!=null and log.opeTime!=''">
+    and ope_time like '%${log.opeTime}%'
+    </if>
+        <if test="log.expTime!=null and log.expTime!=''">
+    and exp_time like '%${log.expTime}%'
+    </if>
+        <if test="log.operator!=null and log.operator!=''">
+    and operator like '%${log.operator}%'
+    </if>
+    	
+
+
+	</select>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectLogAll" resultMap="BaseResultMap">
+	select * from t_log where 1=1 
+        <if test="log.method!=null and log.method!=''">
+    and method like '%${log.method}%'
+    </if>
+        <if test="log.url!=null and log.url!=''">
+    and url like '%${log.url}%'
+    </if>
+        <if test="log.param!=null and log.param!=''">
+    and param like '%${log.param}%'
+    </if>
+        <if test="log.result!=null and log.result!=''">
+    and result like '%${log.result}%'
+    </if>
+        <if test="log.opeTime!=null and log.opeTime!=''">
+    and ope_time like '%${log.opeTime}%'
+    </if>
+        <if test="log.expTime!=null and log.expTime!=''">
+    and exp_time like '%${log.expTime}%'
+    </if>
+        <if test="log.operator!=null and log.operator!=''">
+    and operator like '%${log.operator}%'
+    </if>
+    	
+
+
+	</select>
+
+
+
+</mapper>

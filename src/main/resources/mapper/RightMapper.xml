@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.RightMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.Right">
+        <id column="id" property="id" />
+                <result column="right_name" property="rightName" />
+                <result column="module_id" property="moduleId" />
+                <result column="available_devices" property="availableDevices" />
+                <result column="url" property="url" />
+                <result column="right_txt" property="rightTxt" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectRightByPage" resultMap="BaseResultMap">
+	select * from t_right where 1=1 
+        <if test="right.rightName!=null and right.rightName!=''">
+    and right_name like '%${right.rightName}%'
+    </if>
+        <if test="right.moduleId!=null and right.moduleId!=''">
+    and module_id like '%${right.moduleId}%'
+    </if>
+        <if test="right.availableDevices!=null and right.availableDevices!=''">
+    and available_devices like '%${right.availableDevices}%'
+    </if>
+        <if test="right.url!=null and right.url!=''">
+    and url like '%${right.url}%'
+    </if>
+        <if test="right.rightTxt!=null and right.rightTxt!=''">
+    and right_txt like '%${right.rightTxt}%'
+    </if>
+    	
+
+
+	</select>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectRightAll" resultMap="BaseResultMap">
+	select * from t_right where 1=1 
+        <if test="right.rightName!=null and right.rightName!=''">
+    and right_name like '%${right.rightName}%'
+    </if>
+        <if test="right.moduleId!=null and right.moduleId!=''">
+    and module_id like '%${right.moduleId}%'
+    </if>
+        <if test="right.availableDevices!=null and right.availableDevices!=''">
+    and available_devices like '%${right.availableDevices}%'
+    </if>
+        <if test="right.url!=null and right.url!=''">
+    and url like '%${right.url}%'
+    </if>
+        <if test="right.rightTxt!=null and right.rightTxt!=''">
+    and right_txt like '%${right.rightTxt}%'
+    </if>
+    	
+	order by module_id 
+
+	</select>
+
+<!--查询条件自己看情况添加 -->
+	<select id="selectRightAllByUser" resultMap="BaseResultMap">
+	select * from t_right
+	 where 
+	  id in ( 
+	  select right_id from t_role_right where role_id in
+	   (select role_id from t_user_role where user_id = #{userId})
+	    )
+	</select>
+
+
+
+</mapper>

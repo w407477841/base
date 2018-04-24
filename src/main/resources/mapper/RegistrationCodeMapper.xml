@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.RegistrationCodeMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.RegistrationCode">
+        <id column="id" property="id" />
+                <result column="code" property="code" />
+                <result column="factory_id" property="factoryId" />
+                <result column="status" property="status" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectRegistrationCodeByPage" resultMap="BaseResultMap">
+	select * from t_registration_code where 1=1 
+        <if test="registrationCode.code!=null and registrationCode.code!=''">
+    and code like '%${registrationCode.code}%'
+    </if>
+        <if test="registrationCode.factoryId!=null and registrationCode.factoryId!=''">
+    and factory_id like '%${registrationCode.factoryId}%'
+    </if>
+        <if test="registrationCode.status!=null and registrationCode.status!=''">
+    and status like '%${registrationCode.status}%'
+    </if>
+    	
+
+
+	</select>
+	
+	
+		<!--查询条件自己看情况添加 -->
+	<select id="selectOrRegistrationCodeByPage" resultMap="BaseResultMap">
+	select * from t_registration_code 
+	</select>
+	
+	
+	
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectRegistrationCodeAll" resultMap="BaseResultMap">
+	select * from t_registration_code where 1=1 
+        <if test="registrationCode.code!=null and registrationCode.code!=''">
+    and code like '%${registrationCode.code}%'
+    </if>
+        <if test="registrationCode.factoryId!=null and registrationCode.factoryId!=''">
+    and factory_id like '%${registrationCode.factoryId}%'
+    </if>
+        <if test="registrationCode.status!=null and registrationCode.status!=''">
+    and status like '%${registrationCode.status}%'
+    </if>
+    	
+
+
+	</select>
+
+
+
+</mapper>
