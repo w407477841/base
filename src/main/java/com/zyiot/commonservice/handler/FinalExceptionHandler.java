@@ -35,8 +35,7 @@ public class FinalExceptionHandler implements ErrorController {
 		 }else{
 			 resp.setStatus((int)map.get("status"));
 		 }
-		 
-	     return map;
+		 return map;
 	    }
 
 }

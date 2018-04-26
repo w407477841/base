@@ -29,6 +29,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.toolkit.CollectionUtils;
 import com.mchange.v2.beans.BeansUtils;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+import com.zyiot.commonservice.annotations.DataWarning;
 import com.zyiot.commonservice.entity.RegistrationCode;
 import com.zyiot.commonservice.entity.Role;
 import com.zyiot.commonservice.entity.User;
@@ -47,6 +48,8 @@ import com.zyiot.commonservice.mapper.UserMapper;
 import com.zyiot.commonservice.mapper.UserRoleMapper;
 import com.zyiot.commonservice.pojo.PRegisterInfo;
 import com.zyiot.commonservice.pojo.PUserInfo;
+import com.zyiot.commonservice.rabbitmq.MQConstant;
+import com.zyiot.commonservice.rabbitmq.service.IMessageQueueService;
 import com.zyiot.commonservice.redis.service.IRedisTokenService;
 import com.zyiot.commonservice.service.IUserService;
 
@@ -72,6 +75,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	private UserInfoMapper  userInfoMapper;
 	@Autowired
 	private RegistrationCodeMapper registrationCodeMapper;
+	/**
+	 * 消息队列发送测试
+	 */
+	@Autowired
+	private IMessageQueueService  messageQueueService;
 	
 	@Override
 	public Page<User> findUserByPage(Page<User> page, User user) {
@@ -93,7 +101,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	public User loadUserByUsername(String username) {
 		User user=null;
 			user = baseMapper.findUserByUsernameOrPhone(username,"username");
-		
+		/**
+		 * 消息队列发送测试
+		 */
+			messageQueueService.send(MQConstant.WARNING_ROUTING_KEY, "nihao",10000L);
 		if(user==null||user.getId()==null){
 			ThreadLocalExceptionMessage.push("用户名不存在",401);
 			throw new UsernameNotFoundException(username);

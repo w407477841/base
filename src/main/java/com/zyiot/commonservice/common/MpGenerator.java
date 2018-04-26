@@ -90,7 +90,7 @@ public class MpGenerator {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         strategy.setTablePrefix(new String[] { "t_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-     strategy.setInclude(new String[]{"t_user_info"});
+        strategy.setInclude(new String[]{"t_data_warning_config","t_data_warning_info","t_maintain_warning_config","t_maintain_warning_info"});
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         // strategy.setSuperEntityClass("com.zyiot.gongzhong.model");
