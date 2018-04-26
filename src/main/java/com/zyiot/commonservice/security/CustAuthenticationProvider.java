@@ -61,7 +61,10 @@ public class CustAuthenticationProvider implements AuthenticationProvider {
 		/**
 		 * 是否是AuthenticationManager支持的
 		 */
-		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+		return PhoneCodeAuthenticationToken.class.isAssignableFrom(authentication);
 	}
-
+public static void main(String[] args) {
+	System.out.println(UsernamePasswordAuthenticationToken.class.isAssignableFrom(PhoneCodeAuthenticationToken.class));
 }
+}
+

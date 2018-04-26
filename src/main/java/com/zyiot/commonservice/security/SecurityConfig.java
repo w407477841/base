@@ -41,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 private BCryptPasswordEncoder bCryptPasswordEncoder; 
 	@Autowired
 	private CustAuthenticationProvider authenticationProvider;
+	@Autowired
+	private UsernameAuthenticationProvider  usernameAuthenticationProvider;
 	
 	@Value("${jwt.header}")
 	private String header;
@@ -65,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			throws Exception {
 		
 		auth.authenticationProvider(authenticationProvider).
+		authenticationProvider(usernameAuthenticationProvider).
 		//authenticationProvider( authenticationProvider()).
 		userDetailsService(userServiceImpl).
 		passwordEncoder(bCryptPasswordEncoder)

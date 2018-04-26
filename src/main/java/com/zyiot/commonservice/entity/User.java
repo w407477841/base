@@ -62,6 +62,20 @@ private static  String defaultRolePrefix ="ROLE_" ;// @PreAuthorize("hasRole('AD
 @TableField(value="approved")
 private String approved;
 
+/**
+ * 登录方式 normal/phone
+ */
+@TableField(exist=false)
+private String loginMethod;
+
+
+
+public String getLoginMethod() {
+	return loginMethod;
+}
+public void setLoginMethod(String loginMethod) {
+	this.loginMethod = loginMethod;
+}
 public String getApproved() {
 	return approved;
 }

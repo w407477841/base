@@ -103,8 +103,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 			user = baseMapper.findUserByUsernameOrPhone(username,"username");
 		/**
 		 * 消息队列发送测试
-		 */
+		 
 			messageQueueService.send(MQConstant.WARNING_ROUTING_KEY, "nihao",10000L);
+		*/
 		if(user==null||user.getId()==null){
 			ThreadLocalExceptionMessage.push("用户名不存在",401);
 			throw new UsernameNotFoundException(username);
@@ -129,7 +130,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		User user=null;
 			user = baseMapper.findUserByUsernameOrPhone(phone,"phone");
 		if(user==null||user.getId()==null){
-			//ThreadLocalExceptionMessage.push("手机号不存在");
+			ThreadLocalExceptionMessage.push("手机号不存在",401);
 			throw new UsernameNotFoundException(phone);
 		}
 		if(user.getApproved().equals("未审核")){

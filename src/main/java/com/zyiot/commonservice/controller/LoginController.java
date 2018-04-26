@@ -51,7 +51,7 @@ public class LoginController {
    @Value("${aliyun.login.templateCode}")
   	private String loginTemplateCode;
 	
-@ApiOperation(value="用户登录",notes=" 提供 username password",httpMethod="POST")
+@ApiOperation(value="用户登录",notes=" 提供 username password loginMethod",httpMethod="POST")
 @ApiImplicitParams(value={
 		@ApiImplicitParam(name="user",value="登录信息",paramType="body",dataType="User",required=true)
 })

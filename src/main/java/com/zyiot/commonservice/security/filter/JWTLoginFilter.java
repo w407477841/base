@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,8 +31,11 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zyiot.commonservice.entity.User;
+import com.zyiot.commonservice.excepion.ThreadLocalExceptionMessage;
 import com.zyiot.commonservice.redis.service.IRedisCodeService;
 import com.zyiot.commonservice.redis.service.IRedisTokenService;
+import com.zyiot.commonservice.security.MyUsernameAuthenticationToken;
+import com.zyiot.commonservice.security.PhoneCodeAuthenticationToken;
 import com.zyiot.commonservice.service.IUserService;
 /** 
  * 验证用户名密码正确后，生成一个token，并将token返回给客户端 
@@ -80,13 +86,28 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	            User user = new ObjectMapper()  
 	                    .readValue(req.getInputStream(), User.class);
 	            //通过authenticationManager 验证用户名和密码的有效性
-	            Authentication auth=authenticationManager.authenticate(  
-	                    new UsernamePasswordAuthenticationToken(  
-	                            user.getUsername(),  
-	                            user.getPassword(),  
-	                            user.getAuthorities()));	
-	            
-	            return   auth;
+	            if(user.getLoginMethod()==null){
+	            	ThreadLocalExceptionMessage.push("缺少参数loginMethod",401);
+	            	throw new RuntimeException("缺少参数loginMethod");
+	            }else if(user.getLoginMethod().equals("normal")){
+	            	Authentication auth=authenticationManager.authenticate(  
+		                    new MyUsernameAuthenticationToken(  
+		                            user.getUsername(),  
+		                            user.getPassword(),  
+		                            user.getAuthorities()));	
+		            
+		            return   auth;
+	            }else if(user.getLoginMethod().equals("phone")){
+	            	Authentication auth=authenticationManager.authenticate(  
+		                    new PhoneCodeAuthenticationToken(  
+		                            user.getUsername(),  
+		                            user.getPassword(),  
+		                            user.getAuthorities()));	
+		            return   auth;
+	            }else{
+	            		ThreadLocalExceptionMessage.push("参数loginMethod 可选项normal/phone",401);
+	            		throw new RuntimeException("参数loginMethod 可选项normal/phone");
+	            }
 	        } catch (IOException e) {  
 	            throw new RuntimeException(e);  
 	        }  
