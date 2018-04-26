@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.zyiot.commonservice.excepion.ThreadLocalExceptionMessage;
+import com.zyiot.commonservice.excepion.user.PasswordErrorException;
 import com.zyiot.commonservice.service.impl.UserServiceImpl;
 /**
  * 自定义用户名密码认证
@@ -33,10 +34,10 @@ public class UsernameAuthenticationProvider implements AuthenticationProvider {
 		UserDetails user = userDetailsService.loadUserByUsername(username);
 		
 		if(passwordEncoder.matches(password,user.getPassword())){
-			return new MyUsernameAuthenticationToken(username, password, user.getAuthorities());
+			return new MyUsernameAuthenticationToken(user, password, user.getAuthorities());
 		}else{
 			ThreadLocalExceptionMessage.push("密码错误",401);
-			throw new RuntimeException("密码错误");	
+			throw new PasswordErrorException("密码错误");	
 		}
 		
 		

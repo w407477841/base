@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zyiot.commonservice.entity.User;
+import com.zyiot.commonservice.excepion.ParamException;
 import com.zyiot.commonservice.excepion.ThreadLocalExceptionMessage;
 import com.zyiot.commonservice.redis.service.IRedisCodeService;
 import com.zyiot.commonservice.redis.service.IRedisTokenService;
@@ -88,7 +90,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	            //通过authenticationManager 验证用户名和密码的有效性
 	            if(user.getLoginMethod()==null){
 	            	ThreadLocalExceptionMessage.push("缺少参数loginMethod",401);
-	            	throw new RuntimeException("缺少参数loginMethod");
+	            	throw new ParamException("缺少参数loginMethod");
 	            }else if(user.getLoginMethod().equals("normal")){
 	            	Authentication auth=authenticationManager.authenticate(  
 		                    new MyUsernameAuthenticationToken(  
@@ -106,10 +108,10 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		            return   auth;
 	            }else{
 	            		ThreadLocalExceptionMessage.push("参数loginMethod 可选项normal/phone",401);
-	            		throw new RuntimeException("参数loginMethod 可选项normal/phone");
+	            		throw new ParamException("参数loginMethod 可选项normal/phone");
 	            }
 	        } catch (IOException e) {  
-	            throw new RuntimeException(e);  
+	            throw new ParamException(e);  
 	        }  
 	}
     // 用户成功登录后，这个方法会被调用，我们在这个方法里生成token  
