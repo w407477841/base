@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,8 +38,8 @@ import com.zyiot.commonservice.excepion.ParamException;
 import com.zyiot.commonservice.excepion.ThreadLocalExceptionMessage;
 import com.zyiot.commonservice.redis.service.IRedisCodeService;
 import com.zyiot.commonservice.redis.service.IRedisTokenService;
-import com.zyiot.commonservice.security.MyUsernameAuthenticationToken;
-import com.zyiot.commonservice.security.PhoneCodeAuthenticationToken;
+import com.zyiot.commonservice.security.token.MyUsernameAuthenticationToken;
+import com.zyiot.commonservice.security.token.PhoneCodeAuthenticationToken;
 import com.zyiot.commonservice.service.IUserService;
 /** 
  * 验证用户名密码正确后，生成一个token，并将token返回给客户端 

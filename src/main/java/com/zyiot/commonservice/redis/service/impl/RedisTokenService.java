@@ -1,5 +1,6 @@
 package com.zyiot.commonservice.redis.service.impl;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import com.zyiot.commonservice.redis.service.IRedisTokenService;
 public class RedisTokenService implements IRedisTokenService {
 
 	@Cacheable(value="token",key="#username")
+	//表示从缓存中取，如果缓存中没有，则执行方法
 	public String getCode(String username) {
 		//缓存中获取不到后，返回NULL
 		return null;
@@ -27,10 +29,9 @@ public class RedisTokenService implements IRedisTokenService {
 		return token;
 	}
 
-	@CachePut(value="token",key="#username")
-	public String clearCode(String username) {
+	@CacheEvict(value="token",key="#username")
+	public void clearCode(String username) {
 		// 不管缓存中有没有 都会清空
-		return null;
 	}
 
 }

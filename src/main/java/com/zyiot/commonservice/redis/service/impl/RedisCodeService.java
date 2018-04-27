@@ -2,6 +2,8 @@ package com.zyiot.commonservice.redis.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -46,8 +48,7 @@ public class RedisCodeService implements IRedisCodeService {
 	//String	code = aliyunMesageService.getCode(signName, templateCode, phoneNumber);
 		return code;
 	}
-	@CachePut(value="code",key="#value+#phoneNumber")
-   public String clearCode(String value,String phoneNumber){
-	   return null;
+	@CacheEvict(value="code",key="#value+#phoneNumber")
+   public void clearCode(String value,String phoneNumber){
    }	
 }

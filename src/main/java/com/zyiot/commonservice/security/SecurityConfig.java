@@ -21,6 +21,8 @@ import com.zyiot.commonservice.handler.CustomExceptionResolver;
 import com.zyiot.commonservice.redis.service.IRedisTokenService;
 import com.zyiot.commonservice.security.filter.JWTAuthenticationFilter;
 import com.zyiot.commonservice.security.filter.JWTLoginFilter;
+import com.zyiot.commonservice.security.provider.CustAuthenticationProvider;
+import com.zyiot.commonservice.security.provider.UsernameAuthenticationProvider;
 import com.zyiot.commonservice.service.impl.UserServiceImpl;
 
 

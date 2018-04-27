@@ -1,4 +1,4 @@
-package com.zyiot.commonservice.security;
+package com.zyiot.commonservice.security.provider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,10 +16,11 @@ import com.zyiot.commonservice.excepion.ThreadLocalExceptionMessage;
 import com.zyiot.commonservice.excepion.user.CodeErrorException;
 import com.zyiot.commonservice.redis.service.IRedisCodeService;
 import com.zyiot.commonservice.redis.service.impl.RedisCodeService;
+import com.zyiot.commonservice.security.token.PhoneCodeAuthenticationToken;
 import com.zyiot.commonservice.service.impl.UserServiceImpl;
 /**
  * 自定义认证类，认证手机验证码,
- * spring自带的密码认证还是会执行
+ * 与PhoneCodeAuthenticationToken绑定
  * @author Administrator
  *
  */
@@ -63,8 +64,6 @@ public class CustAuthenticationProvider implements AuthenticationProvider {
 		 */
 		return PhoneCodeAuthenticationToken.class.isAssignableFrom(authentication);
 	}
-public static void main(String[] args) {
-	System.out.println(UsernamePasswordAuthenticationToken.class.isAssignableFrom(PhoneCodeAuthenticationToken.class));
-}
+
 }
 

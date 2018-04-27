@@ -1,4 +1,4 @@
-package com.zyiot.commonservice.security;
+package com.zyiot.commonservice.security.provider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 
 import com.zyiot.commonservice.excepion.ThreadLocalExceptionMessage;
 import com.zyiot.commonservice.excepion.user.PasswordErrorException;
+import com.zyiot.commonservice.security.token.MyUsernameAuthenticationToken;
 import com.zyiot.commonservice.service.impl.UserServiceImpl;
 /**
  * 自定义用户名密码认证
+ * 与MyUsernameAuthenticationToken绑定
  */
 @Component
 public class UsernameAuthenticationProvider implements AuthenticationProvider {

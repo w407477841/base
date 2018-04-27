@@ -1,4 +1,4 @@
-package com.zyiot.commonservice.security;
+package com.zyiot.commonservice.security.token;
 
 import java.util.Collection;
 

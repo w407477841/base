@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -38,10 +39,11 @@ import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 @EnableCaching
+@ConfigurationProperties(prefix="spring.redis")
 public class RedisConfig  extends CachingConfigurerSupport{
 
 	 private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+/*
 	  @Value("${spring.redis.host}")
 	  private String host;
 
@@ -62,7 +64,22 @@ public class RedisConfig  extends CachingConfigurerSupport{
 
 	  @Value("${spring.redis.pool.min-idle}") 
 	  private int minIdle;
-	
+	*/
+	  private String host;
+
+	  private int port;
+
+	  private int timeout;
+
+	  private String password;
+
+	  private int database;
+
+	  private int maxIdle;
+
+	  private int minIdle;
+	 
+	 
 	  /**
 	   *  注解@Cache key生成规则
 	   */
@@ -189,6 +206,62 @@ public class RedisConfig  extends CachingConfigurerSupport{
 	      };
 	      return cacheErrorHandler;
 	  }
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public int getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getDatabase() {
+		return database;
+	}
+
+	public void setDatabase(int database) {
+		this.database = database;
+	}
+
+	public int getMaxIdle() {
+		return maxIdle;
+	}
+
+	public void setMaxIdle(int maxIdle) {
+		this.maxIdle = maxIdle;
+	}
+
+	public int getMinIdle() {
+		return minIdle;
+	}
+
+	public void setMinIdle(int minIdle) {
+		this.minIdle = minIdle;
+	}
 
 	  
 }
