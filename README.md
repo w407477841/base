@@ -14,3 +14,13 @@ swagger2：通过注解方式生成api ，并可通过 host/swagger-ui.html查�
 
 集成 rabbitmq
 处理告警通知,
+
+
+# modify authentication
+修改登录认证，
+添加PhoneCodeAuthenticationToken、MyUsernameAuthenticationToken。
+并将上述两个认证令牌分别与自定义认证器
+（CustAuthenticationProvider UsernameAuthenticationProvider）绑定
+不再使用自带的 UsernamePasswordAuthenticationToken
+
+

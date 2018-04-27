@@ -45,6 +45,8 @@ public class UsernameAuthenticationProvider implements AuthenticationProvider {
 		
 	}
 
+	//与MyUsernameAuthenticationToken绑定。
+	
 	@Override
 	public boolean supports(Class<?> authentication) {
 		// TODO Auto-generated method stub

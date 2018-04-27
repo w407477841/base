@@ -95,7 +95,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	            	throw new ParamException("缺少参数loginMethod");
 	            }else if(user.getLoginMethod().equals("normal")){
 	            	Authentication auth=authenticationManager.authenticate(  
-		                    new MyUsernameAuthenticationToken(  
+		                    new MyUsernameAuthenticationToken( //对应UsernameAuthenticationProvider 
 		                            user.getUsername(),  
 		                            user.getPassword(),  
 		                            user.getAuthorities()));	
@@ -103,7 +103,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		            return   auth;
 	            }else if(user.getLoginMethod().equals("phone")){
 	            	Authentication auth=authenticationManager.authenticate(  
-		                    new PhoneCodeAuthenticationToken(  
+		                    new PhoneCodeAuthenticationToken(  //对应CustAuthenticationProvider
 		                            user.getUsername(),  
 		                            user.getPassword(),  
 		                            user.getAuthorities()));	
