@@ -24,7 +24,13 @@ public final class MQConstant {
 	    //报警通知队列名称  
 	    public static final String WARNING_QUEUE_NAME = "queue.warning"; 
 	    
-	    // 消息路由 ，用于匹配队列
+	    // 消息路由 ，用于匹配队列 发送时使用
 	    public static final String WARNING_ROUTING_KEY = "warning";
+	    
+	    public static final String LOG_QUEUE_NAME = "queue.log";
+	    
+	    public static final String LOG_ROUTING_KEY = "log";
+	    
+	    
 	
 }

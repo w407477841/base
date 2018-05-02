@@ -18,7 +18,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
  *
  */
 
-//@Component("handlerExceptionResolver")
 public class CustomExceptionResolver implements HandlerExceptionResolver {
 
 	@Override

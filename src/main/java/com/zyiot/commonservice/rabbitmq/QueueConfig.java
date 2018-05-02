@@ -34,10 +34,21 @@ public class QueueConfig {
     public Queue queue(){
     	return new Queue(MQConstant.WARNING_QUEUE_NAME, true);
     }
+    
+  //创建队列
+    @Bean
+    public Queue logQueue(){
+    	return new Queue(MQConstant.LOG_QUEUE_NAME, true);
+    }
+    
     @Bean
     //将信道与queue.warning队列绑定,匹配warning完全匹配,部分匹配可用#表示
     public Binding binding(){
     	return BindingBuilder.bind(queue()).to(defaultExchange()).with(MQConstant.WARNING_ROUTING_KEY);
+    }
+    @Bean
+    public Binding logBinding(){
+    	return BindingBuilder.bind(logQueue()).to(defaultExchange()).with(MQConstant.LOG_ROUTING_KEY);
     }
     
     /**
