@@ -18,6 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.zyiot.commonservice.handler.CustomExceptionResolver;
+import com.zyiot.commonservice.push.service.IPushService;
 import com.zyiot.commonservice.redis.service.IRedisTokenService;
 import com.zyiot.commonservice.security.filter.JWTAuthenticationFilter;
 import com.zyiot.commonservice.security.filter.JWTLoginFilter;
@@ -45,6 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private CustAuthenticationProvider authenticationProvider;
 	@Autowired
 	private UsernameAuthenticationProvider  usernameAuthenticationProvider;
+	@Autowired
+	private IPushService pushService;
 	
 	@Value("${jwt.header}")
 	private String header;
@@ -137,7 +140,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          // 除上面外的所有请求全部需要鉴权认证
          .anyRequest().authenticated()
          .and()
-         .addFilter(new JWTLoginFilter(header, secret, expiration, tokenHead, authenticationManager(),userServiceImpl,redisTokenService))
+         .addFilter(new JWTLoginFilter(header, secret, expiration, tokenHead, authenticationManager(),userServiceImpl,redisTokenService,pushService))
          .addFilterAfter(new JWTAuthenticationFilter(header, secret, expiration, tokenHead,userServiceImpl,redisTokenService),JWTLoginFilter.class); 
          
          ;

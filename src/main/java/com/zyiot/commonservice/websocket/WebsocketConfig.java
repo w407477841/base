@@ -1,5 +1,6 @@
 package com.zyiot.commonservice.websocket;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
@@ -12,8 +13,20 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 @Configuration
 @EnableWebSocketMessageBroker//注解使用STOMP协议传输基于代理消息
+@ConfigurationProperties(prefix="websocket")
 public class WebsocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
-	 /** 
+	
+	private String []allowedOrigins;
+	
+	 public String[] getAllowedOrigins() {
+		return allowedOrigins;
+	}
+
+	public void setAllowedOrigins(String[] allowedOrigins) {
+		this.allowedOrigins = allowedOrigins;
+	}
+
+	/** 
      * 配置了一个简单的消息代理，如果不重载，默认情况下回自动配置一个简单的内存消息代理，用来处理以"/topic"为前缀的消息。这里重载configureMessageBroker()方法， 
      * 消息代理将会处理前缀为"/topic"和"/user"的消息。 
      * @param registry 
@@ -35,7 +48,7 @@ public class WebsocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/hello")// 建立连接时使用 如 var socket = new SockJS("http://192.168.0.166:8090/hello");
-        .setAllowedOrigins("http://192.168.0.166:8080")//支持跨域
+        .setAllowedOrigins(allowedOrigins)//支持跨域
         .withSockJS();//当客户机不支持websocket时，采用轮训方式
     }
 }

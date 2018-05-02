@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zyiot.commonservice.websocket.entity.Greeting;
+
 @RestController
 public class WebsocketController {
 
@@ -72,26 +74,4 @@ public class WebsocketController {
     }  
 }
 
-class Greeting {  
-    private String content;  
-    private String type ;
-    private String from;
-  
-    public String getFrom() {
-		return from;
-	}
 
-	public String getType() {
-		return type;
-	}
-
-	public Greeting(String content,String type,String from) {  
-        this.content = content;  
-        this.type=type;
-        this.from=from;
-    }  
-  
-    public String getContent() {  
-        return content;  
-    }  
-}  

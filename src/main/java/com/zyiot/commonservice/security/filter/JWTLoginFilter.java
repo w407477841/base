@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,9 +35,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zyiot.commonservice.annotations.Push;
 import com.zyiot.commonservice.entity.User;
 import com.zyiot.commonservice.excepion.ParamException;
 import com.zyiot.commonservice.excepion.ThreadLocalExceptionMessage;
+import com.zyiot.commonservice.push.service.IPushService;
 import com.zyiot.commonservice.redis.service.IRedisCodeService;
 import com.zyiot.commonservice.redis.service.IRedisTokenService;
 import com.zyiot.commonservice.security.token.MyUsernameAuthenticationToken;
@@ -64,13 +68,14 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	private AuthenticationManager  authenticationManager;
 	private IUserService  userService;
 	private IRedisTokenService  redisTokenService;
+	private IPushService pushService ;
 	public JWTLoginFilter(AuthenticationManager authenticationManager) {
 		super();
 		
 		this.authenticationManager = authenticationManager;
 	}
 	public JWTLoginFilter(String header, String secret, String expiration,
-			String tokenHead,AuthenticationManager authenticationManager,IUserService  userService,IRedisTokenService redisTokenService) {
+			String tokenHead,AuthenticationManager authenticationManager,IUserService  userService,IRedisTokenService redisTokenService,IPushService pushService) {
 		super();
 		this.header = header;
 		this.secret = secret;
@@ -79,6 +84,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		this.authenticationManager = authenticationManager;
 		this.userService  =  userService;
 		this.redisTokenService=redisTokenService;
+		this.pushService =pushService;
 	}
 
 
@@ -141,6 +147,9 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	       */ 
 	     //更新缓存
 		 redisTokenService.updCode(((User) auth.getPrincipal()).getUsername(), token);
+		 //广播登录成功
+		 pushService.push(((User) auth.getPrincipal()).getUsername()+"登录了"); 
+		 
 		 
 		 	res.getWriter().write("{\"status\":\"0\""
 		 			+ ","
