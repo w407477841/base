@@ -23,6 +23,8 @@ swagger2：通过注解方式生成api ，并可通过 host/swagger-ui.html查�
 （CustAuthenticationProvider UsernameAuthenticationProvider）绑定
 不再使用自带的 UsernamePasswordAuthenticationToken
 
+# jiguang
+加入极光推送
 
 # v1.101
 1登录接口返回 用户类型+所属工厂
