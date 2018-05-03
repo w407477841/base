@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.zyiot.commonservice.entity.User;
+import com.zyiot.commonservice.entity.UserInfo;
 import com.zyiot.commonservice.pojo.PUserInfo;
 
 /**
@@ -44,6 +45,12 @@ public interface UserMapper extends BaseMapper<User> {
 	 * @param phone
 	 */
 	 public Integer selectCountUserByPhone(@Param("phone")String phone);
-	
-	
+	/**
+	 * 根据用户名查询工厂编号,类型
+	 * @param username
+	 * @return
+	 */
+	@Select("select factory_id ,type from t_user_info where username=#{username}")
+	 public UserInfo selectFactoryIdByUsername(@Param("username")String username);
+	 
 }

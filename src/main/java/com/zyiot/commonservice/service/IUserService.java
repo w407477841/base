@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.zyiot.commonservice.entity.User;
+import com.zyiot.commonservice.entity.UserInfo;
 import com.zyiot.commonservice.pojo.PRegisterInfo;
 import com.zyiot.commonservice.pojo.PUserInfo;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -55,6 +56,13 @@ public interface IUserService extends IService<User>,UserDetailsService {
 	public void insertRegister(PRegisterInfo registerInfo );
 
 	User loadUserByPhone(String phone);
+	/**
+	 * 根据用户名查询工厂ID和用户类别
+	 * @param username
+	 * @return
+	 */
+	
+	public UserInfo selectFactoryIdByUsername(String username);
 	
 	
 }

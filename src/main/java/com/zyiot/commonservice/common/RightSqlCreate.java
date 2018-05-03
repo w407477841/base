@@ -74,7 +74,7 @@ public class RightSqlCreate {
 			 //create("shangjiInfo","ShangjiInfo", "7");
 			 //create("menu","Menu", "8");
 			// create("factory","Factory", "13");
-			 create("registrationCode","registrationCode", "14");
+			 create("videoConfig","VideoConfig", "18");
 			 
 		}
 	

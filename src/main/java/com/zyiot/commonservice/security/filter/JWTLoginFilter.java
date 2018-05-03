@@ -26,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+import org.apache.http.entity.ContentType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,6 +40,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zyiot.commonservice.annotations.Push;
 import com.zyiot.commonservice.entity.User;
+import com.zyiot.commonservice.entity.UserInfo;
 import com.zyiot.commonservice.excepion.ParamException;
 import com.zyiot.commonservice.excepion.ThreadLocalExceptionMessage;
 import com.zyiot.commonservice.push.service.IPushService;
@@ -150,12 +154,17 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 		 //广播登录成功
 		 pushService.push(((User) auth.getPrincipal()).getUsername()+"登录了"); 
 		 
-		 
+		UserInfo userinfo= userService.selectFactoryIdByUsername(((User) auth.getPrincipal()).getUsername());
+		res.setContentType("application/json;charset=UTF-8");
 		 	res.getWriter().write("{\"status\":\"0\""
 		 			+ ","
 		 			+ "\"access_token\":\""+token+"\""
 		 			+ ","
 		 			+ "\"username\":\""+((User) auth.getPrincipal()).getUsername()+"\""
+		 			+","
+		 			+ "\"factory\":"+userinfo.getFactoryId()
+		 			+","
+		 			+"\"type\":\""+userinfo.getType()+"\""
 		 			+ "}");
 	        res.addHeader(this.header, this.tokenHead+" " + token);  
 	        

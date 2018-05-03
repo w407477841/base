@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.VideoConfigMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.VideoConfig">
+        <id column="id" property="id" />
+                <result column="ip_addr" property="ipAddr" />
+                <result column="port" property="port" />
+                <result column="username" property="username" />
+                <result column="password" property="password" />
+                <result column="video_name" property="videoName" />
+                <result column="factory_id" property="factoryId" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectVideoConfigByPage" resultMap="BaseResultMap">
+	select * from t_video_config where 1=1 
+        <if test="videoConfig.ipAddr!=null and videoConfig.ipAddr!=''">
+    and ip_addr like '%${videoConfig.ipAddr}%'
+    </if>
+        <if test="videoConfig.port!=null and videoConfig.port!=''">
+    and port like '%${videoConfig.port}%'
+    </if>
+        <if test="videoConfig.username!=null and videoConfig.username!=''">
+    and username like '%${videoConfig.username}%'
+    </if>
+        <if test="videoConfig.password!=null and videoConfig.password!=''">
+    and password like '%${videoConfig.password}%'
+    </if>
+        <if test="videoConfig.videoName!=null and videoConfig.videoName!=''">
+    and video_name like '%${videoConfig.videoName}%'
+    </if>
+        <if test="videoConfig.factoryId!=null">
+     and factory_id = #{videoConfig.factoryId}
+    </if>
+    	
+
+
+	</select>
+	
+	
+		<!--查询条件自己看情况添加 -->
+	<select id="selectOrVideoConfigByPage" resultMap="BaseResultMap">
+	select * from t_video_config 
+	<if test="key != null && key != ''">
+    where ( 
+    video_name like '%${key}%'
+    or
+    factory_id = '#{key}' 
+	</if>
+	</select>
+	
+	
+	
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectVideoConfigAll" resultMap="BaseResultMap">
+	select * from t_video_config where 1=1 
+        <if test="videoConfig.ipAddr!=null and videoConfig.ipAddr!=''">
+    and ip_addr like '%${videoConfig.ipAddr}%'
+    </if>
+        <if test="videoConfig.port!=null and videoConfig.port!=''">
+    and port like '%${videoConfig.port}%'
+    </if>
+        <if test="videoConfig.username!=null and videoConfig.username!=''">
+    and username like '%${videoConfig.username}%'
+    </if>
+        <if test="videoConfig.password!=null and videoConfig.password!=''">
+    and password like '%${videoConfig.password}%'
+    </if>
+        <if test="videoConfig.videoName!=null and videoConfig.videoName!=''">
+    and video_name like '%${videoConfig.videoName}%'
+    </if>
+    <if test="videoConfig.factoryId!=null">
+    and factory_id = #{videoConfig.factoryId}
+    </if>
+    	
+
+
+	</select>
+
+
+
+</mapper>

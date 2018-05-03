@@ -233,9 +233,21 @@ public class AutoCreateCode {
 								  table="t_registration_code";
 								 classNameLowCase="registrationCode";
 								 classNameUpCase="RegistrationCode";
-								 className="注册码管理"; 		 
+								 className="注册码管理"; 	
+								 
+								 String [][] videoConfigAttrs = {
+										 {"ip_addr","ipAddr","String","IP地址"},
+										 {"port","port","Integer","端口号"},
+										 {"username","username","String","用户名"},
+										 {"password","password","String","密码"},
+										 {"video_name","videoName","String","视频名称"},
+										 {"factory_id","factoryId","Long","工厂编号"}
+										 };
+										  table="t_video_config";
+										 classNameLowCase="videoConfig";
+										 classNameUpCase="VideoConfig";
+										 className="视频配置管理"; 	 
 						 
-						 
-		 create(classNameLowCase, classNameUpCase, table,className, registerAttrs);
+		 create(classNameLowCase, classNameUpCase, table,className, videoConfigAttrs);
 	}
 }

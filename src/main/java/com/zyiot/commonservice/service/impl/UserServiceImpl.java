@@ -410,6 +410,12 @@ public void insertRegister(PRegisterInfo registerInfo) {
 		
 		
 }
+@Override
+public UserInfo selectFactoryIdByUsername(String username) {
+	
+	
+	return baseMapper.selectFactoryIdByUsername(username);
+}
 
 
 
