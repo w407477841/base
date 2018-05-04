@@ -42,7 +42,7 @@
 		<!--查询条件自己看情况添加 -->
 	<select id="selectOrVideoConfigByPage" resultMap="BaseResultMap">
 	select * from t_video_config 
-	<if test="key != null && key != ''">
+	<if test="key != null and key != ''">
     where ( 
     video_name like '%${key}%'
     or

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -59,17 +60,44 @@ public class AutoCreateCode {
 		 }
 		 
 		 ctx.put("attrs", attrs_n);
-		 String rootPath = AutoCreateCode.class.getClassLoader().getResource("").getFile() + "../../src/main";
+		//自动生成在项目路劲下 String rootPath = AutoCreateCode.class.getClassLoader().getResource("").getFile() + "../../src/main";
+		// merge(controllerTpt,ctx,rootPath+"/java/com/zyiot/commonservice/controller/"+classNameUpCase+"Controller.java");
+		 //merge(iServiceTpt,ctx,rootPath+"/java/com/zyiot/commonservice/service/I"+classNameUpCase+"Service.java");
+		 //merge(ServiceImplTpt,ctx,rootPath+"/java/com/zyiot/commonservice/service/impl/"+classNameUpCase+"ServiceImpl.java");
+		 //merge(mapperTpt,ctx,rootPath+"/java/com/zyiot/commonservice/mapper/"+classNameUpCase+"Mapper.java");
+		 //merge(XMLTpt,ctx,rootPath+"/resources/mapper/"+classNameUpCase+"Mapper.xml");
+		 String rootPath ="D:/autocreate";
 		 
-		 merge(controllerTpt,ctx,rootPath+"/java/com/zyiot/commonservice/controller/"+classNameUpCase+"Controller.java");
-		 merge(iServiceTpt,ctx,rootPath+"/java/com/zyiot/commonservice/service/I"+classNameUpCase+"Service.java");
-		 merge(ServiceImplTpt,ctx,rootPath+"/java/com/zyiot/commonservice/service/impl/"+classNameUpCase+"ServiceImpl.java");
-		 merge(mapperTpt,ctx,rootPath+"/java/com/zyiot/commonservice/mapper/"+classNameUpCase+"Mapper.java");
-		 merge(XMLTpt,ctx,rootPath+"/resources/mapper/"+classNameUpCase+"Mapper.xml");
+		 File dirFile =new File(rootPath);
+		 dirFile.mkdirs();
+		 remove(rootPath);
+		 merge(controllerTpt,ctx,rootPath+"/"+classNameUpCase+"Controller.java");
+		 merge(iServiceTpt,ctx,rootPath+"/I"+classNameUpCase+"Service.java");
+		 merge(ServiceImplTpt,ctx,rootPath+"/"+classNameUpCase+"ServiceImpl.java");
+		 merge(mapperTpt,ctx,rootPath+"/"+classNameUpCase+"Mapper.java");
+		 merge(XMLTpt,ctx,rootPath+"/"+classNameUpCase+"Mapper.xml");
 		 
 		 System.out.println("success...");
 		 }
 		 
+		private static void remove(String path){
+			File file =new File(path);
+			if(!file.exists()){// 目录不存在，创建目录
+				file.mkdirs();
+			}else{
+				if(file.isDirectory()){
+					File files[] = file.listFiles();
+					for( File f : files ){
+						System.out.println(f.getName()+"删除"+(f.delete()?"成功":"失败"));
+					}
+				}else{
+					System.out.println("设置的目录["+path+"]有问题");
+				}
+			}
+			
+			
+		}
+	
 		 private static void merge(Template template, VelocityContext ctx, String path) {
 			 
 			 File  file=new File(path);
@@ -249,5 +277,8 @@ public class AutoCreateCode {
 										 className="视频配置管理"; 	 
 						 
 		 create(classNameLowCase, classNameUpCase, table,className, videoConfigAttrs);
+		 
+		 
+		 
 	}
 }
