@@ -152,7 +152,10 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	     //更新缓存
 		 redisTokenService.updCode(((User) auth.getPrincipal()).getUsername(), token);
 		 //广播登录成功
-		 pushService.push(((User) auth.getPrincipal()).getUsername()+"登录了"); 
+		 
+		 
+		 boolean isMobile =checkUserAgent(req.getHeader("user-agent"));
+		 pushService.push(((User) auth.getPrincipal()).getUsername()+ (isMobile?"在手机":"在电脑")+ "登录了"); 
 		 
 		UserInfo userinfo= userService.selectFactoryIdByUsername(((User) auth.getPrincipal()).getUsername());
 		res.setContentType("application/json;charset=UTF-8");
@@ -174,6 +177,21 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 	}
 	
 	
-	
+	private boolean checkUserAgent(String ua){
+		String[] agent = { "Android", "iPhone", "iPod","iPad", "Windows Phone", "MQQBrowser" }; //定义移动端请求的所有可能类型
+		boolean flag = false;
+		if (!ua.contains("Windows NT") || (ua.contains("Windows NT") && ua.contains("compatible; MSIE 9.0;"))) {
+		// 排除 苹果桌面系统
+		if (!ua.contains("Windows NT") && !ua.contains("Macintosh")) {
+			for (String item : agent) {
+				if (ua.contains(item)) {
+					flag = true;
+					break;
+				}
+			}
+		}
+		}
+		return flag;
+		}
 
 }
