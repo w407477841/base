@@ -274,9 +274,32 @@ public class AutoCreateCode {
 										  table="t_video_config";
 										 classNameLowCase="videoConfig";
 										 classNameUpCase="VideoConfig";
-										 className="视频配置管理"; 	 
+										 className="视频配置管理"; 	
+										 
+										 
+										 String [][] equipmentAttrs = {
+												 {"key","key","String","设备唯一标识"},
+												 {"name","name","String","设备名称"},
+												 {"factory_id","factoryId","Long","所属工厂"},
+												 {"type","type","String","类型"}
+												 };
+												  table="t_equipment";
+												 classNameLowCase="equipment";
+												 classNameUpCase="Equipment";
+												 className="PLC设备管理"; 	
+												 
+												 String [][] dataAttrs = {
+														 {"data","data","String","设备唯一标识"},
+														 {"module","module","String","设备名称"},
+														 {"equipment_id","equipmentId","Long","设备"},
+														 {"time","time","Date","采集时间"}
+														 };
+														  table="t_instrument_data";
+														 classNameLowCase="instrumentData";
+														 classNameUpCase="InstrumentData";
+														 className="仪表数据"; 	
 						 
-		 create(classNameLowCase, classNameUpCase, table,className, videoConfigAttrs);
+		 create(classNameLowCase, classNameUpCase, table,className, dataAttrs);
 		 
 		 
 		 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.InstrumentDataMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.InstrumentData">
+        <id column="id" property="id" />
+                <result column="data" property="data" />
+                <result column="module" property="module" />
+                <result column="equipment_id" property="equipmentId" />
+                <result column="time" property="time" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectInstrumentDataByPage" resultMap="BaseResultMap">
+	select * from t_instrument_data where 1=1 
+        <if test="instrumentData.data!=null and instrumentData.data!=''">
+    and data like '%${instrumentData.data}%'
+    </if>
+        <if test="instrumentData.module!=null and instrumentData.module!=''">
+    and module like '%${instrumentData.module}%'
+    </if>
+        <if test="instrumentData.equipmentId!=null and instrumentData.equipmentId!=''">
+    and equipment_id like '%${instrumentData.equipmentId}%'
+    </if>
+        <if test="instrumentData.time!=null and instrumentData.time!=''">
+    and time like '%${instrumentData.time}%'
+    </if>
+    	
+
+
+	</select>
+	
+	
+		<!--查询条件自己看情况添加 -->
+	<select id="selectOrInstrumentDataByPage" resultMap="BaseResultMap">
+	select * from t_instrument_data 
+	</select>
+	
+	
+	
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectInstrumentDataAll" resultMap="BaseResultMap">
+	select * from t_instrument_data where 1=1 
+        <if test="instrumentData.data!=null and instrumentData.data!=''">
+    and data like '%${instrumentData.data}%'
+    </if>
+        <if test="instrumentData.module!=null and instrumentData.module!=''">
+    and module like '%${instrumentData.module}%'
+    </if>
+        <if test="instrumentData.equipmentId!=null and instrumentData.equipmentId!=''">
+    and equipment_id like '%${instrumentData.equipmentId}%'
+    </if>
+        <if test="instrumentData.time!=null and instrumentData.time!=''">
+    and time like '%${instrumentData.time}%'
+    </if>
+    	
+
+
+	</select>
+
+
+
+</mapper>

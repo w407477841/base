@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zyiot.commonservice.plc.PLCControl;
-import com.zyiot.commonservice.plc.impl.ClientPLCDriver;
 
 @RestController
 @RequestMapping("task")
@@ -24,6 +22,7 @@ public class TaskController {
 		String password = "123456";
 		System.out.println("正在执行连接检测任务");
 			if(passwordEncoder.matches(password, rawPassword)){
+				/*
 				ClientPLCDriver plc =new ClientPLCDriver();
 				synchronized (PLCControl.sockets) {
 				System.out.println("当前共有"+PLCControl.sockets.size()+"个PLC");
@@ -39,7 +38,7 @@ public class TaskController {
 				System.out.println("连接检测任务执行完毕");
 				System.out.println("还有"+PLCControl.sockets.size()+"个PLC存在");
 				return new ResponseEntity<String>("success", HttpStatus.OK);
-			}	
+			}	*/
 		}
 		
 		

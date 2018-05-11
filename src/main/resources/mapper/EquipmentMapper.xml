@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyiot.commonservice.mapper.EquipmentMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zyiot.commonservice.entity.Equipment">
+        <id column="id" property="id" />
+                <result column="key" property="key" />
+                <result column="name" property="name" />
+                <result column="factory_id" property="factoryId" />
+                <result column="type" property="type" />
+            </resultMap>
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectEquipmentByPage" resultMap="BaseResultMap">
+	select * from t_equipment where 1=1 
+        <if test="equipment.key!=null and equipment.key!=''">
+    and key like '%${equipment.key}%'
+    </if>
+        <if test="equipment.name!=null and equipment.name!=''">
+    and name like '%${equipment.name}%'
+    </if>
+        <if test="equipment.factoryId!=null and equipment.factoryId!=''">
+    and factory_id like '%${equipment.factoryId}%'
+    </if>
+        <if test="equipment.type!=null and equipment.type!=''">
+    and type like '%${equipment.type}%'
+    </if>
+    	
+
+
+	</select>
+	
+	
+		<!--查询条件自己看情况添加 -->
+	<select id="selectOrEquipmentByPage" resultMap="BaseResultMap">
+	select * from t_equipment 
+	</select>
+	
+	
+	
+
+	<!--查询条件自己看情况添加 -->
+	<select id="selectEquipmentAll" resultMap="BaseResultMap">
+	select * from t_equipment where 1=1 
+        <if test="equipment.key!=null and equipment.key!=''">
+    and key like '%${equipment.key}%'
+    </if>
+        <if test="equipment.name!=null and equipment.name!=''">
+    and name like '%${equipment.name}%'
+    </if>
+        <if test="equipment.factoryId!=null and equipment.factoryId!=''">
+    and factory_id like '%${equipment.factoryId}%'
+    </if>
+        <if test="equipment.type!=null and equipment.type!=''">
+    and type like '%${equipment.type}%'
+    </if>
+    	
+
+
+	</select>
+
+
+
+</mapper>

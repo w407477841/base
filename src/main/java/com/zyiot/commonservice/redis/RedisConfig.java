@@ -1,12 +1,15 @@
 package com.zyiot.commonservice.redis;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -43,28 +46,6 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisConfig  extends CachingConfigurerSupport{
 
 	 private Logger logger = LoggerFactory.getLogger(this.getClass());
-/*
-	  @Value("${spring.redis.host}")
-	  private String host;
-
-	  @Value("${spring.redis.port}")
-	  private int port;
-
-	  @Value("${spring.redis.timeout}")
-	  private int timeout;
-
-	  @Value("${spring.redis.password}")
-	  private String password;
-
-	  @Value("${spring.redis.database}")
-	  private int database;
-
-	  @Value("${spring.redis.pool.max-idle}")
-	  private int maxIdle;
-
-	  @Value("${spring.redis.pool.min-idle}") 
-	  private int minIdle;
-	*/
 	  private String host;
 
 	  private int port;
@@ -79,24 +60,26 @@ public class RedisConfig  extends CachingConfigurerSupport{
 
 	  private int minIdle;
 	 
+	  private List<String> cacheNames;
+	  
 	 
-	  /**
+
+
+	/**
 	   *  注解@Cache key生成规则
 	   */
 	  @Bean
+	
 	  public KeyGenerator keyGenerator() {
-	      return new KeyGenerator() {
-	        @Override
-	        public Object generate(Object target, Method method, Object... params) {
-	             StringBuilder sb = new StringBuilder();
-	             sb.append(target.getClass().getName());
-	             sb.append(method.getName());
-	             for (Object obj : params) {
-	                 sb.append(obj.toString());
-	             }
-	             return sb.toString();
-	        }
-	      };
+		 return  	  (Object target, Method method, Object... params)->{
+	    		  StringBuilder sb = new StringBuilder();
+		             sb.append(target.getClass().getName());
+		             sb.append(method.getName());
+		             for (Object obj : params) {
+		                 sb.append(obj.toString());
+		             }
+		             return sb.toString();
+	    	  } ;
 	  }
 	  
 	  /**
@@ -111,8 +94,9 @@ public class RedisConfig  extends CachingConfigurerSupport{
 	      Map<String, Long> expires=new HashMap<String, Long>();//单位秒
 	      expires.put("code", 300L);//缓存5分钟
 	      expires.put("token", 7200L);//缓存两小时
+	      	//equipment datakey
 	      cacheManager.setExpires(expires);
-	      // Number of seconds before expiration. Defaults to unlimited (0)
+	      cacheManager.setCacheNames(cacheNames);
 	      cacheManager.setDefaultExpiration(600); //设置key-value超时时间 10分钟
 	     return cacheManager;
 	  }
@@ -262,6 +246,12 @@ public class RedisConfig  extends CachingConfigurerSupport{
 	public void setMinIdle(int minIdle) {
 		this.minIdle = minIdle;
 	}
+	  public List<String> getCacheNames() {
+		return cacheNames;
+	}
 
+	public void setCacheNames(List<String> cacheNames) {
+		this.cacheNames = cacheNames;
+	}
 	  
 }
